@@ -1,0 +1,469 @@
+
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+<script src="datamaps.usa.min.js"></script>
+<link href="marijuana.css" rel="stylesheet" type="text/css" media="screen"/>
+</head>
+<body>
+<div id="computer">
+<div style="float:left;width:15px;height:15px;background-color:#ECF082;"></div><div style="float:left;font-family: Helvetica, Arial, sans-serif;padding-left:5px;font-size:14px;font-weight:bold;padding-right:250px;">MARIJUANA LEGAL</div><div style="float:left;width:15px;height:15px;background-color:#EECB63;"></div><div style="float:left;font-family: Helvetica, Arial, sans-serif;padding-left:5px;font-size:14px;font-weight:bold;">MARIJUANA LEGALIZATION ON BALLOTS IN NOVEMBER 2014 ELECTION</div>
+<br>
+<div style="float:left;width:15px;height:15px;background-color:#88BD5A;margin-top:3px;"></div><div style="float:left;font-family: Helvetica, Arial, sans-serif;padding-left:5px;font-size:14px;font-weight:bold;padding-right:124px;margin-top:3px;">LEGALIZED FOR MEDICAL PURPOSES</div><div style="float:left;width:15px;height:15px;background-color:#126837;margin-top:3px;"></div><div style="float:left;font-family: Helvetica, Arial, sans-serif;padding-left:5px;font-size:14px;font-weight:bold;margin-top:3px;">MEDICAL MARIJUANA ON BALLOT IN NOVEMBER 2014 ELECTION</div></div>
+<div id="others">
+<div style="float:left;width:12px;height:12px;background-color:#ECF082;"></div><div style="float:left;font-family: Helvetica, Arial, sans-serif;padding-left:5px;font-size:12px;font-weight:bold;padding-right:40px;">MARIJUANA LEGAL</div>
+<br>
+<div style="float:left;width:12px;height:12px;background-color:#EECB63;"></div><div style="float:left;font-family: Helvetica, Arial, sans-serif;padding-left:5px;font-size:12px;font-weight:bold;">MARIJUANA LEGALIZATION ON BALLOTS IN NOVEMBER 2014 ELECTION</div>
+<br>
+<div style="float:left;width:12px;height:12px;background-color:#88BD5A;"></div><div style="float:left;font-family: Helvetica, Arial, sans-serif;padding-left:5px;font-size:12px;font-weight:bold;padding-right:40px;">LEGALIZED FOR MEDICAL PURPOSES</div>
+<br>
+<div style="float:left;width:12px;height:12px;background-color:#126837;"></div><div style="float:left;font-family: Helvetica, Arial, sans-serif;padding-left:5px;font-size:12px;font-weight:bold;">MEDICAL MARIJUANA ON BALLOT IN NOVEMBER 2014 ELECTION</div></div>
+<div id="small">
+<div style="float:left;width:11px;height:11px;background-color:#ECF082;"></div><div style="float:left;font-family: Helvetica, Arial, sans-serif;padding-left:5px;font-size:11px;font-weight:bold;padding-right:40px;">MARIJUANA LEGAL</div>
+<br>
+<div style="float:left;width:11px;height:11px;background-color:#EECB63;"></div><div style="float:left;font-family: Helvetica, Arial, sans-serif;padding-left:5px;font-size:11px;font-weight:bold;">MARIJUANA LEGALIZATION ON BALLOTS IN NOVEMBER 2014 ELECTION</div>
+<br>
+<div style="float:left;width:11px;height:11px;background-color:#88BD5A;"></div><div style="float:left;font-family: Helvetica, Arial, sans-serif;padding-left:5px;font-size:11px;font-weight:bold;padding-right:40px;">LEGALIZED FOR MEDICAL PURPOSES</div>
+<br>
+<div style="float:left;width:11px;height:11px;background-color:#126837;"></div><div style="float:left;font-family: Helvetica, Arial, sans-serif;padding-left:5px;font-size:11px;font-weight:bold;">MEDICAL MARIJUANA ON BALLOT IN NOVEMBER 2014 ELECTION</div></div>
+<div id="container" style="position: relative; width: 1000px; height: 600px;"></div>
+<div id="credits" style="font-size:12px;color:gray;text-align:right;">(Production by Chen Wu.)</div>
+<script>
+var map = new Datamap({
+scope: 'usa',
+element: document.getElementById('container'),
+geographyConfig: {
+highlightBorderColor: '#FFFFFF',
+popupTemplate: function(geography, data) {
+return '<div class="hoverinfo">' + '<span style="font-weight:bold;font-size:14px;line-height:2em;">' + geography.properties.name + '</span>' + '<br>' + '<ul><li>'+ data.legalizedlabel + '<span style="font-weight:bold;">' + data.legalized + '</span></li>' + '<br>' + '<li>' + data.medicallabel + '<span style="font-weight:bold;">' + data.medical + '</span></li>' + '<br>' + data.others + '</ul></div>'
+},
+highlightBorderWidth: 3
+},
+done: function(datamap) {
+datamap.svg.selectAll('.AK').on('click', function() {
+window.open("http://www.elections.alaska.gov/petitions/13PSUM/13PSUM-Proposed-Law.pdf");
+});
+datamap.svg.selectAll('.OR').on('click', function() {
+window.open("http://oregonvotes.org/irr/2014/053text.pdf");
+});
+datamap.svg.selectAll('.FL').on('click', function() {
+window.open("http://election.dos.state.fl.us/initiatives/fulltext/pdf/50438-2.pdf");
+});
+},
+fills: {
+'medical': '#88BD5A',
+'ballots': '#EECB63',
+'medicalballots': '#126837',
+'full': '#ECF082',
+'none': '#d3d3d3',
+defaultFill: '#d3d3d3'
+},
+data:{
+"AZ": {
+"fillKey": "medical",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "Yes",
+"others": "",
+},
+"CO": {
+"fillKey": "full",
+"legalizedlabel":"Legalized: ",
+"legalized": "Yes",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "Yes",
+"others": "",
+},
+"DE": {
+"fillKey": "medical",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "Yes",
+"others": "",
+},
+"FL": {
+"fillKey": 'medicalballots',
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "No",
+"others": "<li><span style='font-weight:bold;'>Voters in November will decide on a constitutional amendment to expand medical marijuana usage.<br><span style='font-size:11px; color:gray;'>Click for full text of the proposed consitutional amendment.</span></span></li>",
+},
+"GA": {
+"fillKey": "none",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "No",
+"others": "",
+},
+"HI": {
+"fillKey": "medical",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "Yes",
+"others": "",
+},
+"ID": {
+"fillKey": "none",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "No",
+"others": "",
+},
+"IL": {
+"fillKey": "medical",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "Yes",
+"others": "",
+},
+"IN": {
+"fillKey": "none",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "No",
+"others": "",
+},
+"IA": {
+"fillKey": "none",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "No",
+"others": "",
+},
+"KS": {
+"fillKey": "none",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "No",
+"others": "",
+},
+"KY": {
+"fillKey": "none",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "No",
+"others": "",
+},
+"LA": {
+"fillKey": "none",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "No",
+"others": "",
+},
+"MD": {
+"fillKey": "medical",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "Yes",
+"others": "",
+},
+"ME": {
+"fillKey": "medical",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "Yes",
+"others": "",
+},
+"MA": {
+"fillKey": "medical",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "Yes",
+"others": "",
+},
+"MN*": {
+"fillKey": "medical",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "Yes",
+"others": "<li><span style='font-weight:bold;'>Minnesota prohibits smoking marijuana for medical purposes.</span></li>",
+},
+"MI": {
+"fillKey": "medical",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "Yes",
+"others": "",
+},
+"MS": {
+"fillKey": "none",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "No",
+"others": "",
+},
+"MO": {
+"fillKey": "none",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "No",
+"others": "",
+},
+"MT": {
+"fillKey": "medical",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "Yes",
+"others": "",
+},
+"NC": {
+"fillKey": "none",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "No",
+"others": "",
+},
+"NE": {
+"fillKey": "none",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "No",
+"others": "",
+},
+"NV": {
+"fillKey": "medical",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "Yes",
+"others": "",
+},
+"NH": {
+"fillKey": "medical",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "Yes",
+"others": "",
+},
+"NJ": {
+"fillKey": "medical",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "Yes",
+"others": "",
+},
+"NY*": {
+"fillKey": "medical",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "Yes",
+"others": "<li><span style='font-weight:bold;'>New York prohibits smoking marijuana for medical purposes.</span></li>",
+},
+"ND": {
+"fillKey": "none",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "No",
+"others": "",
+},
+"NM": {
+"fillKey": "medical",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "Yes",
+"others": "",
+},
+"OH": {
+"fillKey": "none",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "No",
+"others": "",
+},
+"OK": {
+"fillKey": "none",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "No",
+"others": "",
+},
+"OR": {
+"fillKey": "ballots",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "Yes",
+"others": "<li><span style='font-weight:bold;'>A statewide referendum on retail sales is on November 2014 ballots.<br><span style='font-size:11px; color:gray;'>Click for full text of the referendum.</span></span></li>",
+},
+"PA": {
+"fillKey": "none",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "No",
+"others": "",
+},
+"RI": {
+"fillKey": "medical",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "Yes",
+"others": "",
+},
+"SC": {
+"fillKey": "none",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "No",
+"others": "",
+},
+"SD": {
+"fillKey": "none",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "No",
+"others": "",
+},
+"TN": {
+"fillKey": "none",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "No",
+"others": "",
+},
+"TX": {
+"fillKey": "none",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "No",
+"others": "",
+},
+"UT": {
+"fillKey": "none",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "No",
+"others": "",
+},
+"WI": {
+"fillKey": "none",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "No",
+"others": "",
+},
+"VA": {
+"fillKey": "none",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "No",
+"others": "",
+},
+"VT": {
+"fillKey": "medical",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "Yes",
+"others": "",
+},
+"WA": {
+"fillKey": "full",
+"legalizedlabel":"Legalized: ",
+"legalized": "Yes",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "Yes",
+"others": ""
+},
+"WV": {
+"fillKey": "none",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "No",
+"others": "",
+},
+"WY": {
+"fillKey": "none",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "No",
+"others": "",
+},
+"CA": {
+"fillKey": "medical",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "Yes",
+"others": "",
+},
+"CT": {
+"fillKey": "medical",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "Yes",
+"others": "",
+},
+"AK": {
+"fillKey": "ballots",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "Yes",
+"others": "<li><span style='font-weight:bold;'>A statewide referendum to tax and regulate the production, sale and use of marijuana is on November 2014 ballots.<br><span style='font-size:11px; color:gray;'>Click for full text of the referendum.</span></span></li>"
+},
+"AR": {
+"fillKey": "none",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "No",
+"others": "",
+},
+"AL": {
+"fillKey": "none",
+"legalizedlabel":"Legalized: ",
+"legalized": "No",
+"medicallabel":"Allows for medical purposes: ",
+"medical": "No",
+"others": "",
+}
+}
+});
+map.labels();
+</script>
+</body>
+</html>

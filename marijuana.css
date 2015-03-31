@@ -1,0 +1,45 @@
+#computer {
+	display:block;
+}
+
+#others {
+	display:none;
+}
+
+#small {
+	display:none;
+}
+
+
+@media (max-width : 859px) and (min-width:542px){
+
+#computer {
+	display:none;
+}
+
+#others {
+	display:block;
+}
+
+#small {
+	display:none;
+}
+
+
+	}
+
+@media (max-width : 541px){
+
+#computer {
+	display:none;
+}
+
+#others {
+	display:none;
+}
+
+#small {
+	display:block;
+}
+
+	}
